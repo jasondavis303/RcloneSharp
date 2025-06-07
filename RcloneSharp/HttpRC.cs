@@ -15,7 +15,7 @@ public class HttpRC(string host = "http://localhost:5572", string? user = null, 
     internal static readonly JsonSerializerOptions JsonSerializerOps = new(JsonSerializerDefaults.Web);
 
     static readonly HttpClient _internalClient = new();
-        
+
     /// <summary>
     /// Helper to launch simple rclone daemons.
     /// </summary>

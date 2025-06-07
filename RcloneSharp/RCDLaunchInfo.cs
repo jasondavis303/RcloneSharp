@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace RcloneSharp;
+﻿namespace RcloneSharp;
 
 /// <summary>
 /// Useful for launching rclone rcd. This is NOT an exhaustive list of options, just a helper
@@ -42,7 +40,7 @@ public class RCDLaunchInfo
             ret += $" --rc-addr {hp}";
 
 
-        if(NoAuth)
+        if (NoAuth)
         {
             ret += " --rc-no-auth";
         }

@@ -25,7 +25,7 @@ public class RefreshRequest : BaseRequest, ICustomRequestSerialization
         if (!string.IsNullOrWhiteSpace(FS))
             ret.Add("fs", FS);
 
-        for(int i = 0; i < Directories.Count; i++)
+        for (int i = 0; i < Directories.Count; i++)
             ret.Add($"dir{i}", Directories[i]);
 
         AddBaseRequestData(ret);
