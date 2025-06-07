@@ -93,7 +93,7 @@ public class OperationsEndpoints
 
 
     /// <summary>
-    /// ake a destination directory or container
+    /// Make a destination directory or container
     /// </summary>
     public Task<Response> MakeDirectory(FSAndRemoteRequest request, CancellationToken cancellationToken = default) =>
         _rc.Post("operations/mkdir", request, cancellationToken);
@@ -132,7 +132,19 @@ public class OperationsEndpoints
         _rc.Post("operations/rmdirs", request, cancellationToken);
 
 
-    //TODO: settier and settierfile - how do you pass in the tier?
+    /// <summary>
+    /// Changes storage tier or class on all files in the path
+    /// </summary>
+    public Task<Response> SetTier(SetTierRequest request, CancellationToken cancellationToken = default) =>
+        _rc.Post("operations/settier", request, cancellationToken);
+
+
+    /// <summary>
+    /// Changes storage tier or class on the single file pointed to
+    /// </summary>
+    public Task<Response> SetTierFile(SetTierFileRequest request, CancellationToken cancellationToken = default) =>
+        _rc.Post("operations/settierfile", request, cancellationToken);
+
 
     /// <summary>
     /// Count the number of bytes and files in remote
