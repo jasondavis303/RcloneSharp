@@ -9,19 +9,25 @@ using System.Text.Json.Nodes;
 
 namespace RcloneSharp;
 
+/// <param name="client">If you need custom configuration of the <see cref="HttpClient"/>, you can optionally supply your own here</param>
 public class HttpRC(string host = "http://localhost:5572", string? user = null, string? password = null)
 {
     internal static readonly JsonSerializerOptions JsonSerializerOps = new(JsonSerializerDefaults.Web);
 
-    static readonly HttpClient _client = new();
-
-
+    static readonly HttpClient _internalClient = new();
+        
     /// <summary>
     /// Helper to launch simple rclone daemons.
     /// </summary>
     public static Process LaunchRCD(RCDLaunchInfo launchInfo) =>
         Process.Start(launchInfo.RcloneExe, launchInfo.BuildArgs());
 
+
+    /// <summary>
+    /// Optional: If you need to cusomize the <see cref="HttpClient"/> (e.g. using client certificates), you can specify a client to use here.
+    /// Otherwise the default internal <see cref="HttpClient"/> will be used.
+    /// </summary>
+    public HttpClient? CustomHttpClient { get; set; }
 
 
     internal async Task<Response> Post(string subUrl, object? data, CancellationToken cancellationToken)
@@ -43,7 +49,7 @@ public class HttpRC(string host = "http://localhost:5572", string? user = null, 
             requestMessage.Content = new StringContent(requestJson, new MediaTypeHeaderValue("application/json"));
         }
 
-        using HttpResponseMessage responseMessage = await _client.SendAsync(requestMessage, completionOption: HttpCompletionOption.ResponseHeadersRead, cancellationToken: cancellationToken).ConfigureAwait(false);
+        using HttpResponseMessage responseMessage = await (CustomHttpClient ?? _internalClient).SendAsync(requestMessage, completionOption: HttpCompletionOption.ResponseHeadersRead, cancellationToken: cancellationToken).ConfigureAwait(false);
         string responseJson = await responseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 
         return new Response
