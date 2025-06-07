@@ -1,6 +1,7 @@
 ﻿using RcloneSharp.HttpEndpoints;
 using RcloneSharp.Requests;
 using RcloneSharp.Responses;
+using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -15,15 +16,23 @@ public class HttpRC(string host = "http://localhost:5572", string? user = null, 
     static readonly HttpClient _client = new();
 
 
-    void AddAuthToRequest(HttpRequestMessage requestMessage)
+    /// <summary>
+    /// Helper to launch simple rclone daemons.
+    /// </summary>
+    public static Process LaunchRCD(RCDLaunchInfo launchInfo) =>
+        Process.Start(launchInfo.RcloneExe, launchInfo.BuildArgs());
+
+
+
+    internal async Task<Response> Post(string subUrl, object? data, CancellationToken cancellationToken)
     {
+        using HttpRequestMessage requestMessage = new(HttpMethod.Post, new Uri(new Uri(host.TrimEnd('/')), subUrl.TrimStart('/')));
+
         if (!string.IsNullOrWhiteSpace(user))
             if (!string.IsNullOrWhiteSpace(password))
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(user + ":" + password)));
-    }
 
-    static string? SerializeRequestData(HttpRequestMessage requestMessage, object? data)
-    {
+
         string? requestJson = null;
         if (data != null)
         {
@@ -33,94 +42,33 @@ public class HttpRC(string host = "http://localhost:5572", string? user = null, 
                 requestJson = JsonSerializer.Serialize(data, JsonSerializerOps);
             requestMessage.Content = new StringContent(requestJson, new MediaTypeHeaderValue("application/json"));
         }
-        return requestJson;
-    }
 
-
-    internal async Task<Response> Post(string subUrl, object? data, CancellationToken cancellationToken)
-    {
-        HttpRequestMessage requestMessage = new(HttpMethod.Post, new Uri(new Uri(host.TrimEnd('/')), subUrl.TrimStart('/')));
-        AddAuthToRequest(requestMessage);
-        string? requestJson = SerializeRequestData(requestMessage, data);
-
-        HttpResponseMessage responseMessage = await _client.SendAsync(requestMessage, completionOption: HttpCompletionOption.ResponseHeadersRead, cancellationToken: cancellationToken).ConfigureAwait(false);
+        using HttpResponseMessage responseMessage = await _client.SendAsync(requestMessage, completionOption: HttpCompletionOption.ResponseHeadersRead, cancellationToken: cancellationToken).ConfigureAwait(false);
         string responseJson = await responseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 
-        if (responseMessage.IsSuccessStatusCode)
+        return new Response
         {
-            if (data is BaseRequest br && br.Async)
-            {
-                return new Response
-                {
-                    Success = true,
-                    RequestJson = requestJson,
-                    ResponseJson = responseJson,
-                    Async = JsonSerializer.Deserialize<AsyncResponse>(responseJson, JsonSerializerOps)
-                };
-            }
-            else
-            {
-                return new Response
-                {
-                    Success = true,
-                    RequestJson = requestJson,
-                    ResponseJson = responseJson
-                };
-            }
-        }
-        else
-        {
-            return new Response
-            {
-                RequestJson = requestJson,
-                ResponseJson = responseJson,
-                Error = JsonSerializer.Deserialize<ErrorResponse>(responseJson, JsonSerializerOps)
-            };
-        }
+            Success = responseMessage.IsSuccessStatusCode,
+            RequestJson = requestJson,
+            ResponseJson = responseJson,
+            Async = responseMessage.IsSuccessStatusCode ? JsonSerializer.Deserialize<AsyncResponse>(responseJson, JsonSerializerOps) : null,
+            Error = responseMessage.IsSuccessStatusCode ? null : JsonSerializer.Deserialize<ErrorResponse>(responseJson, JsonSerializerOps)
+        };
     }
 
 
     internal async Task<Response<T>> PostAndReturnData<T>(string subUrl, object? data, CancellationToken cancellationToken)
     {
-        HttpRequestMessage requestMessage = new(HttpMethod.Post, new Uri(new Uri(host.TrimEnd('/')), subUrl.TrimStart('/')));
-        AddAuthToRequest(requestMessage);
-        string? requestJson = SerializeRequestData(requestMessage, data);
-
-        HttpResponseMessage responseMessage = await _client.SendAsync(requestMessage, completionOption: HttpCompletionOption.ResponseHeadersRead, cancellationToken: cancellationToken).ConfigureAwait(false);
-        string responseJson = await responseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
-        if (responseMessage.IsSuccessStatusCode)
+        Response response = await Post(subUrl, data, cancellationToken).ConfigureAwait(false);
+        return new Response<T>
         {
-            if (data is BaseRequest br && br.Async)
-            {
-                return new Response<T>
-                {
-                    Success = true,
-                    RequestJson = requestJson,
-                    ResponseJson = responseJson,
-                    Async = JsonSerializer.Deserialize<AsyncResponse>(responseJson, JsonSerializerOps)
-                };
-            }
-            else
-            {
-                return new Response<T>
-                {
-                    Success = true,
-                    RequestJson = requestJson,
-                    ResponseJson = responseJson,
-                    ResponseData = JsonSerializer.Deserialize<T>(responseJson, JsonSerializerOps)
-                };
-            }
-        }
-        else
-        {
-            return new Response<T>
-            {
-                RequestJson = requestJson,
-                ResponseJson = responseJson,
-                Error = JsonSerializer.Deserialize<ErrorResponse>(responseJson, JsonSerializerOps)
-            };
-        }
+            Async = response.Async,
+            Error = response.Error,
+            RequestJson = response.RequestJson,
+            ResponseData = response.Success ? JsonSerializer.Deserialize<T>(response.ResponseJson, JsonSerializerOps) : default,
+            ResponseJson = response.ResponseJson,
+            Success = response.Success
+        };
     }
 
 
