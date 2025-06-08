@@ -6,6 +6,7 @@ namespace RcloneSharp.Requests;
 public class BaseRequest
 {
     [JsonPropertyName("_async")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Async { get; set; }
 
     [JsonPropertyName("_config")]
