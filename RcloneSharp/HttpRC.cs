@@ -56,7 +56,7 @@ public class HttpRC(string host = "http://localhost:5572", string? user = null, 
             Success = responseMessage.IsSuccessStatusCode,
             RequestJson = requestJson,
             ResponseJson = responseJson,
-            Async = responseMessage.IsSuccessStatusCode ? JsonSerializer.Deserialize<AsyncResponse>(responseJson, JsonSerializerOps) : null,
+            Async = responseMessage.IsSuccessStatusCode && data is BaseRequest br && br.Async ? JsonSerializer.Deserialize<AsyncResponse>(responseJson, JsonSerializerOps) : null,
             Error = responseMessage.IsSuccessStatusCode ? null : JsonSerializer.Deserialize<ErrorResponse>(responseJson, JsonSerializerOps)
         };
     }
