@@ -5,7 +5,7 @@ namespace RcloneSharp.Requests;
 public class MountRequest : SingleFSRequest
 {
     /// <summary>
-    /// valid path on the local machine (required)
+    /// Valid path on the local machine (required)
     /// </summary>
     public required string MountPoint { get; set; }
 

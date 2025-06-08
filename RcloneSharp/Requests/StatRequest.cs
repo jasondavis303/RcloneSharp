@@ -5,8 +5,8 @@ namespace RcloneSharp.Requests;
 public class StatRequest : FSAndRemoteRequest
 {
     /// <summary>
-    /// options to control the listing (optional)
-    /// see operations/list for the options
+    /// Options to control the listing (optional).
+    /// See operations/list for the options
     /// </summary>
     [JsonPropertyName("opt")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

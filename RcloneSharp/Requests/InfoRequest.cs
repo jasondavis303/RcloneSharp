@@ -3,8 +3,8 @@
 public class InfoRequest : BaseRequest
 {
     /// <summary>
-    /// optional string of comma separated blocks to include.
-    /// all are included if this is missing or ""
+    /// Optional string of comma separated blocks to include.
+    /// All are included if this is missing or ""
     /// </summary>
     public string? Blocks { get; set; }
 }

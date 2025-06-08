@@ -48,7 +48,7 @@ public class CoreEndpoints
 
 
     /// <summary>
-    /// his returns PID of current process. Useful for stopping rclone process.
+    /// This returns PID of current process. Useful for stopping rclone process.
     /// </summary>
     public Task<Response<int>> PID(CancellationToken cancellationToken = default) =>
         _rc.PostAndReturnDataFlattened<int>("core/pid", null, "pid", cancellationToken);
@@ -91,7 +91,9 @@ public class CoreEndpoints
         _rc.PostAndReturnDataFlattened<List<TransferredResponse>>("core/transferred", group.AsJsonObject("group"), "transferred", cancellationToken);
 
 
-
+    /// <summary>
+    /// Shows the current version of rclone and the go runtime.
+    /// </summary>
     public Task<Response<VersionResponse>> Version(CancellationToken cancellationToken = default) =>
         _rc.PostAndReturnData<VersionResponse>("core/version", null, cancellationToken);
 

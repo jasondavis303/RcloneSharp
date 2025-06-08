@@ -5,18 +5,18 @@ namespace RcloneSharp.Requests;
 public class HashSumRequest : SingleFSRequest
 {
     /// <summary>
-    /// type of hash to be used
+    /// Type of hash to be used
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter<HashTypes>))]
     public HashTypes HashType { get; set; }
 
     /// <summary>
-    /// check by downloading rather than with hash (boolean)
+    /// Check by downloading rather than with hash (boolean)
     /// </summary>
     public bool Download { get; set; }
 
     /// <summary>
-    /// output the hashes in base64 rather than hex (boolean)
+    /// Output the hashes in base64 rather than hex (boolean)
     /// </summary>
     public bool Base64 { get; set; }
 }

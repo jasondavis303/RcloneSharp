@@ -5,7 +5,7 @@ namespace RcloneSharp.Requests;
 public class ListRequest : FSAndRemoteRequest
 {
     /// <summary>
-    /// a dictionary of options to control the listing (optional)
+    /// A dictionary of options to control the listing (optional)
     /// </summary>
     public Dictionary<string, object>? Options { get; set; }
 
@@ -57,7 +57,7 @@ public class ListRequest : FSAndRemoteRequest
     public bool Metadata { get; set; }
 
     /// <summary>
-    /// array of strings of hash types to show if showHash set
+    /// Hash types to show if showHash set
     /// </summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string>? HashTypes { get; set; }

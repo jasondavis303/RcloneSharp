@@ -3,7 +3,7 @@
 public class RemoveDirectoriesRequest : FSAndRemoteRequest
 {
     /// <summary>
-    /// set to true not to delete the root
+    /// Set to true not to delete the root
     /// </summary>
     public bool LeaveRoot { get; set; }
 }

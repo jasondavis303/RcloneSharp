@@ -4,7 +4,7 @@ using System.Text.Json.Nodes;
 namespace RcloneSharp.HttpEndpoints;
 
 /*
-    No endpoints that change he config file are included 
+    No endpoints that change the config file are included 
 */
 
 public class ConfigEndpoints
@@ -47,6 +47,9 @@ public class ConfigEndpoints
         _rc.PostAndReturnData<JsonObject>("config/providers", null, cancellationToken);
 
 
+    /// <summary>
+    /// Set the path of the config file to use
+    /// </summary>
     public Task<Response> SetPath(string path, CancellationToken cancellationToken = default) =>
         _rc.Post("config/setpath", path.AsJsonObject("path"), cancellationToken);
 }
