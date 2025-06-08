@@ -2,6 +2,8 @@
 
 public class FSInfoResponse
 {
+    public required string Name { get; set; }
+
     public required FeaturesResponse Features { get; set; }
 
     public List<string> Hashes { get; set; } = [];
