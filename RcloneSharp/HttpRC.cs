@@ -9,7 +9,6 @@ using System.Text.Json.Nodes;
 
 namespace RcloneSharp;
 
-/// <param name="client">If you need custom configuration of the <see cref="HttpClient"/>, you can optionally supply your own here</param>
 public class HttpRC(string host = "http://localhost:5572", string? user = null, string? password = null)
 {
     internal static readonly JsonSerializerOptions JsonSerializerOps = new(JsonSerializerDefaults.Web);
