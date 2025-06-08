@@ -17,8 +17,10 @@ public class MountRequest : SingleFSRequest
     public string? MountType { get; set; }
 
     [JsonPropertyName("mountOpt")]
-    public Dictionary<string, object> MountOptions { get; set; } = [];
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public Dictionary<string, object>? MountOptions { get; set; }
 
     [JsonPropertyName("vfsOpt")]
-    public Dictionary<string, object> VFSOptions { get; set; } = [];
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public Dictionary<string, object>? VFSOptions { get; set; }
 }

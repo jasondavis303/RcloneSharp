@@ -28,31 +28,37 @@ public class CheckRequest : BaseRequest
     /// <summary>
     /// Check by downloading rather than with hash
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Download { get; set; }
 
     /// <summary>
     /// Treat checkFileFs:checkFileRemote as a SUM file with hashes of given type
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool CheckFileHash { get; set; }
 
     /// <summary>
     /// Treat checkFileFs:checkFileRemote as a SUM file with hashes of given type
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool CheckFileFS { get; set; }
 
     /// <summary>
     /// Treat checkFileFs:checkFileRemote as a SUM file with hashes of given type
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool CheckFileRemote { get; set; }
 
     /// <summary>
     /// Check one way only, source files must exist on remote
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool OneWay { get; set; }
 
     /// <summary>
     /// Make a combined report of changes (default false)
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Combined { get; set; }
 
     /// <summary>
@@ -70,6 +76,7 @@ public class CheckRequest : BaseRequest
     /// <summary>
     /// Report all matching files (default false)
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool ReportAllMatchingFiles { get; set; }
 
     /// <summary>
@@ -80,5 +87,6 @@ public class CheckRequest : BaseRequest
     /// <summary>
     /// Report all files with errors (hashing or reading) (default true)
     /// </summary>
-    public bool Error { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+    public bool Error { get; set; } = true;
 }

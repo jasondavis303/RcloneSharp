@@ -6,13 +6,11 @@ namespace RcloneSharp.Requests;
 public class RefreshRequest : BaseRequest, ICustomRequestSerialization
 {
     [JsonPropertyName("fs")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? FS { get; set; }
 
     [JsonPropertyName("dirs")]
     public List<string> Directories { get; set; } = [];
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Recursive { get; set; }
 
     public JsonObject GetJsonObject()

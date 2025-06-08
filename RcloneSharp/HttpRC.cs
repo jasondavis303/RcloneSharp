@@ -11,7 +11,10 @@ namespace RcloneSharp;
 
 public class HttpRC(string host = "http://localhost:5572", string? user = null, string? password = null)
 {
-    internal static readonly JsonSerializerOptions JsonSerializerOps = new(JsonSerializerDefaults.Web);
+    internal static readonly JsonSerializerOptions JsonSerializerOps = new(JsonSerializerDefaults.Web)
+    {
+        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+    };
 
     static readonly HttpClient _internalClient = new();
 

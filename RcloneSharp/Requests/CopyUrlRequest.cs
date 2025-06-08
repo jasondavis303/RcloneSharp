@@ -1,4 +1,6 @@
-﻿namespace RcloneSharp.Requests;
+﻿using System.Text.Json.Serialization;
+
+namespace RcloneSharp.Requests;
 
 public class CopyUrlRequest : FSAndRemoteRequest
 {
@@ -10,5 +12,6 @@ public class CopyUrlRequest : FSAndRemoteRequest
     /// <summary>
     /// Boolean, set to true to retrieve destination file name from url
     /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool AutoFilename { get; set; }
 }

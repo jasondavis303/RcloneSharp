@@ -9,6 +9,5 @@ public class StatRequest : FSAndRemoteRequest
     /// See operations/list for the options
     /// </summary>
     [JsonPropertyName("opt")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Dictionary<string, object>? Options { get; set; }
 }

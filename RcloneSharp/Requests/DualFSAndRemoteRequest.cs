@@ -8,13 +8,11 @@ public class DualFSAndRemoteRequest : DualFSRequest
     /// A path within that remote e.g. "file.txt" for the source
     /// </summary>
     [JsonPropertyName("srcRemote")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? SourceRemote { get; set; }
 
     /// <summary>
     /// A path within that remote e.g. "file2.txt" for the destination
     /// </summary>
     [JsonPropertyName("dstRemote")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? DestinationRemote { get; set; }
 }

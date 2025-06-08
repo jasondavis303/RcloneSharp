@@ -6,19 +6,15 @@ namespace RcloneSharp.Requests;
 public class BaseRequest
 {
     [JsonPropertyName("_async")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Async { get; set; }
 
     [JsonPropertyName("_config")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public JsonObject? Config { get; set; }
 
     [JsonPropertyName("_filter")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public JsonObject? Filter { get; set; }
 
     [JsonPropertyName("_group")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Group { get; set; }
 
     internal void AddBaseRequestData(JsonObject jsonObject)

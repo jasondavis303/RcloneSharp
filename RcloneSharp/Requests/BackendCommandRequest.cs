@@ -13,11 +13,11 @@ public class BackendCommandRequest : SingleFSRequest
     /// A list of arguments for the backend command
     /// </summary>
     [JsonPropertyName("arg")]
-    public List<string> Arguments { get; set; } = [];
+    public List<string>? Arguments { get; set; }
 
     /// <summary>
     /// A map of string to string of options
     /// </summary>
     [JsonPropertyName("opt")]
-    public Dictionary<string, string?> Options { get; set; } = [];
+    public Dictionary<string, string?>? Options { get; set; }
 }
