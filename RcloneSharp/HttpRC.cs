@@ -116,6 +116,8 @@ public class HttpRC(string host = "http://localhost:5572", string? user = null, 
 
     public OperationsEndpoints Operations => new(this);
 
+    public OptionsEndpoints Options => new(this);
+
     //public PluginsCtlEndpoints PluginsCtl => new(this);
     //Excluded - it's a GUI for rclone. This api is for building GUIs, 
     //so it's kind of beyond the scope of this library
