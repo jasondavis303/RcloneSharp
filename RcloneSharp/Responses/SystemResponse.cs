@@ -2,17 +2,17 @@
 
 public class SystemResponse
 {
-    public required SystemTypeResponse ATime { get; set; }
+    public SystemTypeResponse? ATime { get; set; }
 
-    public required SystemTypeResponse BTime { get; set; }
+    public SystemTypeResponse? BTime { get; set; }
 
-    public required SystemTypeResponse GID { get; set; }
+    public SystemTypeResponse? GID { get; set; }
 
-    public required SystemTypeResponse Mode { get; set; }
+    public SystemTypeResponse? Mode { get; set; }
 
-    public required SystemTypeResponse MTime { get; set; }
+    public SystemTypeResponse? MTime { get; set; }
 
-    public required SystemTypeResponse RDev { get; set; }
+    public SystemTypeResponse? RDev { get; set; }
 
-    public required SystemTypeResponse UID { get; set; }
+    public SystemTypeResponse? UID { get; set; }
 }

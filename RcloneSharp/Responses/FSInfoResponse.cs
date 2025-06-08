@@ -12,5 +12,5 @@ public class FSInfoResponse
 
     public required string String { get; set; }
 
-    public required MetadataInfoResponse MetadataInfo { get; set; }
+    public MetadataInfoResponse? MetadataInfo { get; set; }
 }
