@@ -1,14 +1,11 @@
-﻿using System.Text.Json.Serialization;
-
-namespace RcloneSharp.Requests;
+﻿namespace RcloneSharp.Requests;
 
 public class HashSumRequest : SingleFSRequest
 {
     /// <summary>
     /// Type of hash to be used
     /// </summary>
-    [JsonConverter(typeof(JsonStringEnumConverter<HashTypes>))]
-    public HashTypes HashType { get; set; }
+    public required string HashType { get; set; }
 
     /// <summary>
     /// Check by downloading rather than with hash (boolean)
