@@ -5,7 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>13</LangVersion>
-
+		<NoWarn>CS1591;CS1572;CS1573</NoWarn>
 
 		<!-- Leave the revision as zero, it will be set by github actions -->
 		<Version>1.0.0.0</Version>
@@ -27,7 +27,6 @@
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	</PropertyGroup>
 
