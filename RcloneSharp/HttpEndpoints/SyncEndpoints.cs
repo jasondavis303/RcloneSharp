@@ -11,6 +11,7 @@ public class SyncEndpoints
 
     /// <summary>
     /// Perform bidirectional synchronization between two paths.
+    /// </summary>
     public Task<Response> BiSync(BisyncRequest request, CancellationToken cancellationToken = default) =>
         _rc.Post("sync/bisync", request, cancellationToken);
 
