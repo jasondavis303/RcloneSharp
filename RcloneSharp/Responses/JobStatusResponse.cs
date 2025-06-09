@@ -12,7 +12,7 @@ public class JobStatusResponse
     /// <summary>
     /// time in seconds that the job ran for
     /// </summary>
-    public int Duration { get; set; }
+    public float Duration { get; set; }
 
     /// <summary>
     /// time the job finished
