@@ -156,6 +156,6 @@ public class OperationsEndpoints
     /// <summary>
     /// Give information about the supplied file or directory
     /// </summary>
-    public Task<Response<ListResponse>> Stat(StatRequest request, CancellationToken cancellationToken = default) =>
-        _rc.PostAndReturnData<ListResponse>("operations/stat", request, cancellationToken);
+    public Task<Response<StatItemResponse>> Stat(StatRequest request, CancellationToken cancellationToken = default) =>
+        _rc.PostAndReturnData<StatItemResponse>("operations/stat", request, cancellationToken);
 }
