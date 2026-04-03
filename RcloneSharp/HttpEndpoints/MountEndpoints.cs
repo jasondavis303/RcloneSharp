@@ -12,8 +12,8 @@ public class MountEndpoints
     /// <summary>
     /// This shows currently mounted points, which can be used for performing an unmount.
     /// </summary>
-    public Task<Response<List<string>>> ListMounts(CancellationToken cancellationToken = default) =>
-        _rc.PostAndReturnDataFlattened<List<string>>("mount/listmounts", null, "mountPoints", cancellationToken);
+    public Task<Response<List<MountPointResponse>>> ListMounts(CancellationToken cancellationToken = default) =>
+        _rc.PostAndReturnDataFlattened<List<MountPointResponse>>("mount/listmounts", null, "mountPoints", cancellationToken);
 
 
     /// <summary>
